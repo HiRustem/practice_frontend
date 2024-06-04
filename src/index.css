@@ -1,0 +1,112 @@
+@import './components/styles/form.css';
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(0.875rem, 0.743rem + 0.5634vw, 1.25rem);
+  font-style: normal;
+}
+
+.element-hidden {
+  display: none;
+}
+
+.my-input {
+  padding: 1rem;
+
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
+  border-bottom: 2px solid #60a5fa;
+
+  font-style: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.my-input:focus {
+  outline: none;
+}
+
+.my-textarea {
+  padding: 1rem;
+
+  border: 2px solid #60a5fa;
+  border-radius: 1rem;
+
+  font-style: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.my-textarea:focus {
+  outline: none;
+}
+
+.my-select {
+  font-style: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.my-select:focus {
+  outline: none;
+}
+
+.my-button {
+  padding: 1rem;
+  margin-inline: auto;
+
+  border: 2px solid #60a5fa;
+  border-radius: 1rem;
+  background-color: #fff;
+
+  font-style: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+}
+
+.my-button:focus {
+  outline: none;
+}
+
+.my-button:hover {
+  background-color: #60a5fa;
+
+  color: #fff;
+}
+
+.dialog {
+  max-inline-size: 600px;
+
+  border: none;
+  border-radius: 1rem;
+}
+
+.dialog__bar {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+
+.dialog__close {
+  background-color: transparent;
+
+  border: none;
+
+  cursor: pointer;
+}
+
+.dialog__close:hover {
+  color: #60a5fa;
+}
+
+.loading {
+  text-align: center;
+}
