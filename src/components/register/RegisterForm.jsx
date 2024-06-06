@@ -19,6 +19,7 @@ const RegisterForm = ({ setLoading, openCompleteDialog, openErrorDialog }) => {
     })
     const [checkedUniversity, setCheckedUniversity] = useState(false)
     const [checkedCollege, setCheckedCollege] = useState(false)
+    const [anotherActive, setAnotherActive] = useState(false)
 
     const checkResult = (result) => {
         if (result.status) {
@@ -46,6 +47,10 @@ const RegisterForm = ({ setLoading, openCompleteDialog, openErrorDialog }) => {
     }
 
     const onUniversitySelect = (event) => {
+        if (event.target.value === 'Другое') {
+            setAnotherActive(true)
+        }
+
         setForm(prev => ({
             ...prev,
             university: event.target.value
@@ -109,6 +114,8 @@ const RegisterForm = ({ setLoading, openCompleteDialog, openErrorDialog }) => {
                     )))}
                 </select>
             </label>
+
+            <input className={`${anotherActive ? '' : 'element-hidden'} my-input`} name='university' type='text' placeholder='Введите свой вариант' value={form.university} onChange={onChange} />
 
             <label htmlFor='course' className='form__select-label'>
                 <span className='form__select-text'>На каком вы сейчас курсе?</span>

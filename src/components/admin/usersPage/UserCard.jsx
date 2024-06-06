@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 
-const UserCard = ({ user }) => {
-    
-
+const UserCard = ({ user, openUserCard }) => {
     return (
-        <li>{user}</li>
+        <button className='user-card' onClick={() => openUserCard(user)}>
+            <span className='user-card__name'>{user.name}</span>
+        </button>
     )
 }
 

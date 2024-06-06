@@ -27,6 +27,15 @@ export const getUsersList = async (skip, take) => {
         })
 }
 
+export const getUserByName = async (name) => {
+    return await fetch(`${config.baseUrl}/admin/getUserByName/${name}`, {
+        headers: config.headers,
+    })
+        .then(result => {
+            return checkStatus(result)
+        })
+}
+
 export const getUsersByUniversity = async (skip, take, university) => {
     return await fetch(`${config.baseUrl}/admin/getUsersByUniversity?skip=${skip}&take=${take}&university=${university}`, {
         headers: config.headers,

@@ -1,0 +1,138 @@
+/* User */
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* UsersList */
+.users {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.users__title {
+    font-size: larger;
+    font-family: inherit;
+
+    text-align: center;
+}
+
+.users__list-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.users__list-form {
+
+}
+
+.users__list-label {
+    display: flex;
+    flex-direction: column;
+}
+
+.users-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    row-gap: 1rem;
+    column-gap: 1rem;
+
+    margin-block: 2rem;
+    padding: 0;
+
+    justify-content: center;
+    align-items: center;
+
+    list-style: none;
+}
+
+.users__footer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 1rem;
+}
+
+.users__prev,
+.users__next {
+    padding: .5rem;
+}
+
+.user-card {
+    max-inline-size: 320px;
+    inline-size: 320px;
+
+    flex-shrink: 1;
+
+    padding: 1rem;
+
+    background-color: #60a5fa;
+
+    border: none;
+    border-radius: 1rem;
+
+    color: #fff;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition: all ease .5s;
+}
+
+.user-card:hover {
+    transform: scale(1.05);
+}
+
+.user-card:active {
+    background-color: #2a5488;
+}
+
+
+/* UserDialog */
+.user-dialog {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+}
+
+.user-dialog__name {
+    font-weight: 600;
+}
+
+.user-dialog__text {
+    display: flex;
+    gap: .5rem;
+}
+
+.user-dialog__text_highlighted {
+    font-weight: 600;
+}
+
+.user-dialog__feedback-title {
+    font-weight: 600;
+}
+
+.user-dialog__feedbacks {
+    padding: 0;
+
+    list-style: none;
+}
+
+/* UserFeedback */
+.user-feedback__text {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-feedback__text_highlighted {
+    font-weight: 600;
+}

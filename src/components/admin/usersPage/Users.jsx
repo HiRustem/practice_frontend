@@ -1,38 +1,88 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import UsersList from './UsersList'
-import { getUsersList } from '../../../api/admin'
+import { getUserByName, getUsersByUniversity, getUsersDepartment, getUsersList } from '../../../api/admin'
+import Loading from '../../Loading'
+import Dialog from '../../Dialog'
+import UserDialog from './UserDialog'
 
-const Users = ({ setIsLoading }) => {
+const Users = () => {
     const [users, setUsers] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [currentUser, setCurrentUser] = useState({})
+    const userRef = useRef(null)
 
-    const getUsers = async () => {
+    const [query, setQuery] = useState({
+        type: 'init',
+        value: '',
+    })
+
+    const openUserCard = (user) => {
+        setCurrentUser(user)
+        userRef.current.showModal()
+    }
+
+    const closeUserCard = () => {
+        userRef.current.close()
+    }
+
+    const getUsers = async (skip, take, type, value) => {
         setIsLoading(true)
-        await getUsersList(0, 20)
-            .then(result => {
-                console.log(result)
-                setUsers(result)
-            })
-            .finally(() => {
-                setIsLoading(false)
-            })
+        setQuery({
+            type,
+            value,
+        })
+        try {
+            let data
+            
+            if (type === 'init') {
+                data = await getUsersList(skip, take)
+            }
+
+            if (type === 'name') {
+                data = await getUserByName(!value ? query.value : value)
+            }
+
+            if (type === 'university' || !type && query.type === 'university') {
+                data = await getUsersByUniversity(skip, take, !value ? query.value : value)
+            }
+
+            if (type === 'department' || !type && query.type === 'university') {
+                data = await getUsersDepartment(skip, take, !value ? query.value : value)
+            }
+
+            setUsers(data)
+        } catch(err) {
+            console.log(err)
+        }
+        setIsLoading(false)
     }
 
     useEffect(() => {
         console.log(users)
     }, [users])
+
     
     return (
-        <div>
+        <>
             {
-                users.length !== 0 ?
-                    <UsersList users={users} setUsers={setUsers} setIsLoading={setIsLoading} />
+                isLoading ?
+                    <Loading />
                 :
+                <div className='user'>
+                    {
+                        users.length !== 0 ?
+                            <UsersList users={users} setUsers={setUsers} setIsLoading={setIsLoading} openUserCard={openUserCard} getUsers={getUsers} />
+                        :
 
-                    <button onClick={getUsers}>Загрузить практикантов</button>
+                            <button className='my-button' onClick={() => getUsers(0, 20, 'init', '')}>Загрузить практикантов</button>
 
+                    }
+
+                    <Dialog ref={userRef} children={ <UserDialog user={currentUser} /> } close={closeUserCard} />
+                </div>
             }
-        </div>
+        </>
     )
 }
 
-export default Users
+export default React.memo(Users)
