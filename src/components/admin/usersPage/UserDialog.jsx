@@ -1,7 +1,43 @@
-import UserFeedback from "./UserFeedback"
+import { useState } from 'react'
+import UserFeedback from './UserFeedback'
+import { changeBeginningDate, changeStatus } from '../../../api/admin'
 
-const UserDialog = ({ user }) => {
+const UserDialog = ({ user, setCurrentUser }) => {
     const { id, name, email, phone, period, university, course, faculty, department, done, date, feedback, count } = user
+
+    const [beginningDate, setBeginningDate] = useState('')
+
+    const onChange = (event) => {
+        setBeginningDate(event.target.value)
+    }
+
+    const changeDate = async (event) => {
+        event.preventDefault()
+
+        try {
+            await changeBeginningDate(id, beginningDate)
+            setCurrentUser(prev => ({
+                ...prev,
+                date: beginningDate,
+            }))
+            alert('Дата успешно изменена')
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const updateStatus = async () => {
+        try {
+            await changeStatus(id, !done)
+            setCurrentUser(prev => ({
+                ...prev,
+                done: !done
+            }))
+            alert('Статус успешно изменен')
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     return (
         <div className='user-dialog'>
@@ -30,7 +66,7 @@ const UserDialog = ({ user }) => {
                     <span className='user-dialog__text_highlighted'>Подразделение:</span>{department}
                 </p>
                 <p className='user-dialog__text'>
-                    <span className='user-dialog__text_highlighted'>Завершил:</span>{done}
+                    <span className='user-dialog__text_highlighted'>Завершил:</span>{done ? 'Да' : 'Нет'}
                 </p>
                 <p className='user-dialog__text'>
                     <span className='user-dialog__text_highlighted'>Дата начала:</span>{date}
@@ -53,6 +89,17 @@ const UserDialog = ({ user }) => {
                     ))
                 }
             </ul>
+
+            <div className='user-dialog__footer'>
+
+                <form onSubmit={changeDate}>
+                    <input type='text' value={beginningDate} onChange={onChange} />
+
+                    <button type='submit'>Применить</button>
+                </form>
+
+                <button onClick={updateStatus}>Изменить статус</button>
+            </div>
         </div>
     )
 }

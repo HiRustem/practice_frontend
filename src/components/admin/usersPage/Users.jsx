@@ -56,11 +56,6 @@ const Users = () => {
         }
         setIsLoading(false)
     }
-
-    useEffect(() => {
-        console.log(users)
-    }, [users])
-
     
     return (
         <>
@@ -71,14 +66,14 @@ const Users = () => {
                 <div className='user'>
                     {
                         users.length !== 0 ?
-                            <UsersList users={users} setUsers={setUsers} setIsLoading={setIsLoading} openUserCard={openUserCard} getUsers={getUsers} />
+                            <UsersList users={users} openUserCard={openUserCard} getUsers={getUsers} />
                         :
 
                             <button className='my-button' onClick={() => getUsers(0, 20, 'init', '')}>Загрузить практикантов</button>
 
                     }
 
-                    <Dialog ref={userRef} children={ <UserDialog user={currentUser} /> } close={closeUserCard} />
+                    <Dialog ref={userRef} children={ <UserDialog user={currentUser} setCurrentUser={setCurrentUser} /> } close={closeUserCard} />
                 </div>
             }
         </>
