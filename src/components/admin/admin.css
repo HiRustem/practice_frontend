@@ -1,8 +1,19 @@
 /* User */
 .user {
     display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+
     align-items: center;
     justify-content: center;
+}
+
+.user__buttons {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
 }
 
 /* UsersList */
@@ -26,9 +37,7 @@
     flex-direction: column;
 }
 
-.users__list-form {
-
-}
+.users__list-form {}
 
 .users__list-label {
     display: flex;
@@ -95,7 +104,6 @@
     background-color: #2a5488;
 }
 
-
 /* UserDialog */
 .user-dialog {
     display: flex;
@@ -135,4 +143,29 @@
 
 .user-feedback__text_highlighted {
     font-weight: 600;
+}
+
+/* DepartmentFeedback */
+
+.feedbacks {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+}
+
+.feedbacks__title {
+    font-size: larger;
+    font-family: inherit;
+
+    text-align: center;
+}
+
+.feedbacks__list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.feedback__item {
+    flex-basis: 300px;
 }

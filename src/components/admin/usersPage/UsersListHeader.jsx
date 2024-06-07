@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { createTable } from '../../../helpers/createTable'
+import { getAllUsers } from '../../../api/admin'
 
 const UsersListHeader = ({ getUsers }) => {
   const [searchType, setSearchType] = useState('')
@@ -64,6 +66,11 @@ const UsersListHeader = ({ getUsers }) => {
     }
   }
 
+  const getTable = async () => {
+    const data = await getAllUsers()
+    createTable(data)
+  }
+
   return (
     <div className='users__list-header'>
       <label htmlFor='searchType' className='form__select-labe'>
@@ -75,6 +82,8 @@ const UsersListHeader = ({ getUsers }) => {
           <option className='' value='Подразделение'>Подразделение</option>
         </select>
       </label>
+
+      <button className='my-button' onClick={getTable}>Выгрузить таблицу</button>
 
       <form onSubmit={searchByName} className={`${searchType === 'ФИО' ? '' : 'element-hidden'}`}>
         <label className='users__list-label' htmlFor='user-name'>

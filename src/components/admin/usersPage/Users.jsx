@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import UsersList from './UsersList'
-import { getUserByName, getUsersByUniversity, getUsersDepartment, getUsersList } from '../../../api/admin'
+import { getAllUsers, getUserByName, getUsersByUniversity, getUsersDepartment, getUsersList } from '../../../api/admin'
 import Loading from '../../Loading'
 import Dialog from '../../Dialog'
 import UserDialog from './UserDialog'
+import { getFeedbacks } from '../../../api/department'
+import DepartmentFeedbacksList from '../departmentFeedbacks/DepartmentFeedbacksList'
 
 const Users = () => {
     const [users, setUsers] = useState([])
+    const [departmentFeedbacks, setDepartmentFeedbacks] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
     const userRef = useRef(null)
@@ -27,6 +30,7 @@ const Users = () => {
 
     const getUsers = async (skip, take, type, value) => {
         setIsLoading(true)
+        setDepartmentFeedbacks([])
         setQuery({
             type,
             value,
@@ -35,7 +39,7 @@ const Users = () => {
             let data
             
             if (type === 'init') {
-                data = await getUsersList(skip, take)
+                data = await getAllUsers()
             }
 
             if (type === 'name') {
@@ -56,6 +60,21 @@ const Users = () => {
         }
         setIsLoading(false)
     }
+
+    const getDepartmentsFeedbacks = async () => {
+        setIsLoading(true)
+        setUsers([])
+        try {
+            await getFeedbacks()
+                .then(result => {
+                    setDepartmentFeedbacks(result)
+                })
+        } catch (e) {
+            console.log(e)
+        }
+
+        setIsLoading(false)
+    }
     
     return (
         <>
@@ -64,12 +83,22 @@ const Users = () => {
                     <Loading />
                 :
                 <div className='user'>
+                    <div className='user__buttons'>
+                        <button className='my-button' onClick={() => getUsers(0, 20, 'init', '')}>Загрузить практикантов</button>
+
+                        <button className='my-button' onClick={getDepartmentsFeedbacks}>Загрузить отзывы подразделений</button>
+                    </div>
                     {
                         users.length !== 0 ?
                             <UsersList users={users} openUserCard={openUserCard} getUsers={getUsers} />
                         :
+                        
+                        departmentFeedbacks.length !== 0 ?
+                            <DepartmentFeedbacksList feedbacks={departmentFeedbacks} />
 
-                            <button className='my-button' onClick={() => getUsers(0, 20, 'init', '')}>Загрузить практикантов</button>
+                        :
+
+                        null
 
                     }
 
